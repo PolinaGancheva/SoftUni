@@ -7,9 +7,9 @@ function Pyramid(base, increment) {
     let row = 0;
     let currentbase=base;
  
-    while (currentbase>2) {
-     let marbel=currentbase*4-4;
-     let stone=currentbase*currentbase-marbel;
+    while (currentbase > 2) {
+     let marbel = currentbase* 4 - 4;
+     let stone = currentbase * currentbase - marbel;
         totalstone+=stone;
  
         row++;
@@ -21,7 +21,7 @@ function Pyramid(base, increment) {
         currentbase-=2;
     }
     row++;
-    let gold=currentbase*currentbase;
+    let gold=currentbase * currentbase;
    
     stone = Math.ceil(totalstone * increment);
     marble = Math.ceil(totalmarble * increment);
