@@ -17,9 +17,7 @@ function solve(arr){
             if(boughtBitcoins===1){
                 firstDay = day;
             }
-          
         }
-       
     }
 
     console.log(`Bought bitcoins: ${boughtBitcoins}`);
@@ -28,5 +26,3 @@ function solve(arr){
     }
     console.log(`Left money: ${money.toFixed(2)} lv.`);
 }
-solve([100,200,300]);
-solve([3124.15, 504.212, 2511.124]);
