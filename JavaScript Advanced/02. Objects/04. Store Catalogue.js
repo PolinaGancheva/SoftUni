@@ -4,13 +4,19 @@ function solve(arr){
         let [name, quantity] = line.split(' : ');
         obj[name] = quantity; 
     }
-    for (const key in obj) {
-        if (key[0]) {
-            
-            
+   let initials = new Set;
+   let sorted = Object.entries(obj).sort((a,b) => a[0].localeCompare(b[0]));
+  
+   sorted.map(x => initials.add(x[0][0]));
+   
+   for (let item of initials){
+    console.log(item);
+    sorted.map((x) => {
+        if(x[0].startsWith(item)){
+             console.log(`${x[0]}: ${x[1]}`)
         }
-    }
-    console.log(obj);
+    });
+   }
 }
 solve(['Appricot : 20.4',
 'Fridge : 1500',
