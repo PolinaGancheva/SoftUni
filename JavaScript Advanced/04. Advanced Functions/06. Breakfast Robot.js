@@ -1,21 +1,21 @@
     let manager = (function() {
-        let robot = {
+        let ingredientObj = {
             protein: 0,
             carbohydrate: 0,
             fat: 0,
             flavour: 0
         }
-        let recipes = {
+        let recipesObj = {
             apple: {
-                carb: 1,
+                carbohydrate: 1,
                 flavour: 2
             },
             lemonade: {
-                carb: 10,
+                carbohydrate: 10,
                 flavour: 20
             },
             burger: {
-                carb: 5,
+                carbohydrate: 5,
                 fat: 7,
                 flavour: 3
             },
@@ -26,63 +26,43 @@
             },
             turkey: {
                 protein: 10,
-                fat: 1,
-                flavour: 1
+                carbohydrate: 10,
+                fat: 10,
+                flavour: 10
             }
-        }
-      
-        return {
-                 restock:(microelement, quantity) =>{ 
-                    robot[microelement] += quantity;
-                    return 'Success';
-                 },
-                  prepare: (recipe, quantity)=>{
-                    let error = false;
-                    for (let rec in recipes[recipe]) {
-                        let str = rec;
-        
-                        if (str == 'carb')
-                            str = 'carbohydrate';
-        
-                        if (robot[str] >= recipes[recipe][rec] * quantity) {
-                            robot[str] -= recipes[recipe][rec] * quantity;
-                        } else {
-                           error = true;
-                           return `Error: not enough ${str} in stock`;
-                        }
-                    }
-        
-                    if (!error)
-                      return'Success';
-                 },
-                 print: () => {
-                    let result = '';
-                    for (let prop in robot)
-                        result += `${prop}=${robot[prop]} `;
-        
-                     return result;
+        };
+        const prepareRecepie = (recepie, neededQuantity) => {
+            const neededIngredients = Object.entries(recipesObj[recepie]);
+
+            for(const [ing, qty] of neededIngredients){
+                const ingredientStored = ingredientObj[ing] * neededQuantity;
+                if(qty > ingredientStored){
+                    return `Error: not enough ${ing} in stock`;
                 }
-               
             }
+            for (const [ing, qty] of neededIngredients){
+                ingredientObj[ing] -= qty * neededQuantity;
+            }
+            return 'Success';
+        }
+      return function(input){
+          const tokens = input.split(' ');
+          const command = tokens[0];
+          switch(command){
+              case 'restock': ingredientObj[tokens[1]] = Number(tokens[2])
+              return 'Success';
+              case 'prepare': return prepareRecepie(tokens[1], Number(tokens[2]))
+              case 'report':
+                  return Object.entries(ingredientObj)
+                  .map((kvp) => `${kvp[0]}=${kvp[1]}`)
+                  .join(' ');
+          }
+      }
 })()
-for (let cmd of input) {
-    [command, val1, val2] = cmd[0].split(' ');
-    manager[command](val1, val2);
-//     if(command === 'restock'){
-//         restock(val1,val2);
-       
-//     }
-//    else if(command === 'prepare'){
-//     prepare(val1,val2); 
-//    }
-//     else if(command === 'report'){
-//         print; 
-//     }
 
-
-let input = [
-    ['restock flavour 50', 'Success'],
-    ['prepare lemonade 4', 'Error: not enough carbohydrate in stock']
-];
-}
-console.log(solve(input));
+console.log(manager('restock carbohydrate 10', 'Success'))
+console.log(manager('restock flavour 10', 'Success'))
+console.log(manager('prepare apple 1', 'Success'))
+console.log(manager('restock fat 10', 'Success'))
+console.log(manager('prepare burger 1', 'Success'))
+console.log(manager('report', 'protein=0 carbohydrate=4 fat=3 flavour=5'))
