@@ -52,39 +52,3 @@ function solve(){
     }
     return {Employee, Junior, Senior, Manager}
 }
-// function solve(){
-//     function Employee(name, age){
-//         if(new.target === Employee){
-//             throw new Error('Cannot instantiate directly.')
-//         }
-//         this.name = name,
-//         this.age = age,
-//         this.salary = 0,
-//         this.tasks = []
-//     }
-//     Employee.prototype.work = function() {
-//         let currentTask = this.tasks.shift();
-//         console.log(this.name + currentTask);
-//         this.tasks.push(currentTask);
-//       };
-//       Employee.prototype.collectSalary = function() {
-//         console.log(`${this.name} received ${this.getSalary} this month`)
-//       };
-//       Employee.prototype.getSalary = function() {
-//         return this.salary;
-//       };
-
-//       Object.setPrototypeOf(Junior, Employee);
-//       Junior.prototype.constructor = Junior;
-      
-//       function Junior(name, age){
-//         Junior.call(this, name, age);
-//           this._text = text;
-//           Object.defineProperty(this, 'text', {
-//               get: function (){
-//                   return this._text;
-//               }
-//           })
-//       }
-
-// }
